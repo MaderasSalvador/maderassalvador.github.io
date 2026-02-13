@@ -212,8 +212,11 @@
         sel.appendChild(opt);
       });
 
-      document.getElementById("cat").addEventListener("change", render);
-      document.getElementById("q").addEventListener("input", render);
+      const catEl = document.getElementById("cat");
+      if (catEl) catEl.addEventListener("change", render);
+
+      const qEl = document.getElementById("q");
+      if (qEl) qEl.addEventListener("input", render);
 
       render();
     }
@@ -223,9 +226,7 @@
       document.getElementById("grid").innerHTML =
         '<div class="col-12"><div class="alert alert-danger">Error cargando productos. Verifica que exista <b>' + DATA_URL + '</b>.</div></div>';
     });
- <script src="js/contacto.js"></script>
-</body>
-</html>
-
+  </script>
+  <script src="js/contacto.js"></script>
 </body>
 </html>

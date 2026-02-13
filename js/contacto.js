@@ -9,7 +9,6 @@ const CONTACTO = {
 };
 
 function aplicarContactos() {
-
   document.querySelectorAll(".wa-principal").forEach(btn => {
     btn.href = `https://wa.me/${CONTACTO.whatsappPrincipal}?text=Hola%20Maderas%20Salvador,%20quiero%20cotizar.`;
   });
@@ -29,7 +28,10 @@ function aplicarContactos() {
   document.querySelectorAll(".pinterest-link").forEach(btn => {
     btn.href = CONTACTO.pinterest;
   });
-
 }
 
-document.addEventListener("DOMContentLoaded", aplicarContactos);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", aplicarContactos);
+} else {
+  aplicarContactos();
+}
