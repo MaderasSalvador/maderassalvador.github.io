@@ -4,7 +4,8 @@ const CONTACTO = {
   whatsappPrincipal: "593981316871",
   whatsappAlterno: "593939162587",
   instagram: "https://www.instagram.com/maderas_salvador",
-  facebook: "https://www.facebook.com/share/1ARHZBvi1B/"
+  facebook: "https://www.facebook.com/share/1ARHZBvi1B/",
+  pinterest: "https://www.pinterest.com/maderassalvador001/?actingBusinessId=1106407970864235135"
 };
 
 function aplicarContactos() {
@@ -23,6 +24,10 @@ function aplicarContactos() {
 
   document.querySelectorAll(".facebook-link").forEach(btn => {
     btn.href = CONTACTO.facebook;
+  });
+
+  document.querySelectorAll(".pinterest-link").forEach(btn => {
+    btn.href = CONTACTO.pinterest;
   });
 
 }
