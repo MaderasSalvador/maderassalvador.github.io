@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Madera | Maderas Salvador</title>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="icon" href="images/fevicon.png" type="image/gif" />
+<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+
+<body>
+  <div class="header_section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-lg-3">
+          <div class="logo"><a href="index.html"><img src="images/logo.png" alt="Maderas Salvador"></a></div>
+        </div>
+        <div class="col-sm-4 col-lg-5">
+          <div class="menu-area">
+            <nav class="navbar navbar-expand-lg ">
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+<li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+<li class="nav-item"><a class="nav-link" href="madera.html">Madera</a></li>
+<li class="nav-item"><a class="nav-link" href="muebles.html">Muebles</a></li>
+<li class="nav-item"><a class="nav-link" href="quienes-somos.html">Quiénes somos</a></li>
+<li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+<li class="nav-item"><a class="nav-link" href="carrito.html">Carrito <span id="cartCountBadge" class="badge badge-success" style="margin-left:6px;">0</span></a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-4">
+          <div class="togle_3">
+            <div class="right_main">
+              <div class="togle_main">
+                <a href="carrito.html" style="color:#fff;">
+                  <i class="fa fa-shopping-cart"></i> Carrito
+                  <span class="badge badge-success cart-count" style="margin-left:6px;">0</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="layout_padding" style="padding-top:40px;">
+    <div class="container">
+      <h2 style="margin-bottom:10px;">Madera</h2>
+      <p style="color:#666; margin-bottom:18px;">Selecciona tus productos y agrégalos al carrito. Luego envías todo por WhatsApp.</p>
+
+      <div class="row" style="margin-bottom:16px;">
+        <div class="col-md-4">
+          <label style="font-weight:600;">Categoría</label>
+          <select id="cat" class="form-control">
+            <option value="TODOS">Todos</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label style="font-weight:600;">Buscar</label>
+          <input id="q" class="form-control" placeholder="Ej: 5x2, tablón, batiente, 2.10, SKU...">
+        </div>
+      </div>
+
+      <div id="grid" class="row"></div>
+
+      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn btn-success" href="carrito.html"><i class="fa fa-shopping-cart"></i> Ver carrito</a>
+        <a class="btn btn-outline-success" href="contacto.html">Contacto</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer_section layout_padding">
+    <div class="container">
+      <p class="lorem_ipsum_text">© <span id="y"></span> Maderas Salvador • Ecuador</p>
+    </div>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery-3.0.0.min.js"></script>
+  <script src="js/plugin.js"></script>
+
+  <script src="js/cart.js"></script>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    const DATA_URL = "products_madera.json";
+    let all = [];
+
+    function norm(s) {
+      return String(s || "").toLowerCase().trim();
+    }
+
+    function money(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return "Consultar";
+      return "$" + n.toFixed(2);
+    }
+
+    function render() {
+      const grid = document.getElementById("grid");
+      const cat = document.getElementById("cat").value;
+      const q = norm(document.getElementById("q").value);
+
+      const filtered = all.filter(p => {
+        const inCat = (cat === "TODOS") || (String(p.categoria || "").toUpperCase() === cat);
+        const blob = norm([p.sku, p.categoria, p.nombre, p.variedad, p.dimension, p.largo, p.unidad, p.stock, p.precio].join(" "));
+        const inQ = !q || blob.includes(q);
+        return inCat && inQ;
+      });
+
+      grid.innerHTML = "";
+
+      filtered.forEach(p => {
+        const col = document.createElement("div");
+        col.className = "col-md-4";
+        col.style.marginBottom = "16px";
+
+        const title = (p.nombre ? p.nombre + " " : "") + (p.dimension || "");
+        const price = money(p.precio);
+
+        col.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title" style="margin-bottom:6px;">${title}</h5>
+              <div style="color:#666; font-size:13px; margin-bottom:10px;">
+                <b>${p.categoria || ""}</b> • SKU: ${p.sku || ""} • Largo: ${p.largo || ""}
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:12px;">
+                <div style="font-size:18px; font-weight:800;">${price}</div>
+                <span class="badge badge-secondary">${p.stock || ""}</span>
+              </div>
+
+              <div class="form-row align-items-center">
+                <div class="col-5">
+                  <input type="number" class="form-control form-control-sm qty" min="1" value="1">
+                </div>
+                <div class="col-7">
+                  <button class="btn btn-success btn-sm btn-block addBtn">
+                    Agregar al carrito
+                  </button>
+                </div>
+              </div>
+
+              <div style="font-size:12px; color:#666; margin-top:10px;">
+                Unidad: ${p.unidad || "—"} • Variedad: ${p.variedad || "—"}
+              </div>
+            </div>
+          </div>
+        `;
+
+        const qtyEl = col.querySelector(".qty");
+        const btn = col.querySelector(".addBtn");
+
+        btn.addEventListener("click", () => {
+          const qty = Math.max(1, Number(qtyEl.value || 1));
+          window.MSCart.addItem({
+            id: "madera:" + (p.sku || title),
+            type: "madera",
+            sku: p.sku || "",
+            category: p.categoria || "",
+            name: p.nombre || "Madera",
+            dimension: p.dimension || "",
+            length: p.largo || "",
+            unit: p.unidad || "",
+            price: p.precio || 0,
+            qty: qty,
+            note: ""
+          });
+          btn.textContent = "Agregado ✓";
+          setTimeout(()=>btn.textContent="Agregar al carrito", 900);
+        });
+
+        grid.appendChild(col);
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="col-12"><div class="alert alert-warning">No hay resultados. Prueba otra búsqueda.</div></div>';
+      }
+
+      window.MSCart.updateBadges();
+    }
+
+    async function init() {
+      const res = await fetch(DATA_URL, { cache: "no-store" });
+      const data = await res.json();
+      all = Array.isArray(data) ? data : (data.items || []);
+
+      // Categories
+      const cats = new Set(all.map(p => String(p.categoria || "").toUpperCase()).filter(Boolean));
+      const sel = document.getElementById("cat");
+      Array.from(cats).sort().forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c; opt.textContent = c;
+        sel.appendChild(opt);
+      });
+
+      document.getElementById("cat").addEventListener("change", render);
+      document.getElementById("q").addEventListener("input", render);
+
+      render();
+    }
+
+    init().catch(err => {
+      console.error(err);
+      document.getElementById("grid").innerHTML =
+        '<div class="col-12"><div class="alert alert-danger">Error cargando productos. Verifica que exista <b>' + DATA_URL + '</b>.</div></div>';
+    });
+  </script>
+</body>
+</html>

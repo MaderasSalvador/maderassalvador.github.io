@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Muebles | Maderas Salvador</title>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="icon" href="images/fevicon.png" type="image/gif" />
+<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+
+<body>
+  <div class="header_section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-lg-3">
+          <div class="logo"><a href="index.html"><img src="images/logo.png" alt="Maderas Salvador"></a></div>
+        </div>
+        <div class="col-sm-4 col-lg-5">
+          <div class="menu-area">
+            <nav class="navbar navbar-expand-lg ">
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+<li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+<li class="nav-item"><a class="nav-link" href="madera.html">Madera</a></li>
+<li class="nav-item"><a class="nav-link" href="muebles.html">Muebles</a></li>
+<li class="nav-item"><a class="nav-link" href="quienes-somos.html">Quiénes somos</a></li>
+<li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+<li class="nav-item"><a class="nav-link" href="carrito.html">Carrito <span id="cartCountBadge" class="badge badge-success" style="margin-left:6px;">0</span></a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-4">
+          <div class="togle_3">
+            <div class="right_main">
+              <div class="togle_main">
+                <a href="carrito.html" style="color:#fff;">
+                  <i class="fa fa-shopping-cart"></i> Carrito
+                  <span class="badge badge-success cart-count" style="margin-left:6px;">0</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="layout_padding" style="padding-top:40px;">
+    <div class="container">
+      <h2 style="margin-bottom:10px;">Muebles</h2>
+      <p style="color:#666; margin-bottom:18px;">Agrega muebles estándar al carrito o crea un pedido bajo medida y envíalo por WhatsApp.</p>
+
+      <h4 style="margin-top:10px;">Muebles estándar</h4>
+      <div class="row" id="stdGrid" style="margin-top:12px;"></div>
+
+      <hr style="margin:28px 0;">
+
+      <h4>Mueble bajo pedido</h4>
+      <p style="color:#666;">Completa estos datos y agrégalo al carrito (el precio se confirma por WhatsApp).</p>
+
+      <div class="card" style="padding:16px; margin-bottom:16px;">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label>Tipo de mueble</label>
+            <input id="bp_tipo" class="form-control" placeholder="Ej: Velador, mesa, clóset...">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Medidas</label>
+            <input id="bp_medidas" class="form-control" placeholder="Ej: 50x40x35 cm">
+          </div>
+          <div class="form-group col-md-4">
+            <label>Ciudad (entrega)</label>
+            <input id="bp_ciudad" class="form-control" placeholder="Ej: Guayaquil">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Material / acabado</label>
+            <input id="bp_acabado" class="form-control" placeholder="Ej: Teca, barniz mate, rústico...">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Cantidad</label>
+            <input id="bp_qty" type="number" min="1" value="1" class="form-control">
+          </div>
+          <div class="form-group col-md-3" style="display:flex; align-items:flex-end;">
+            <button id="bp_add" class="btn btn-success btn-block">Agregar al carrito</button>
+          </div>
+        </div>
+
+        <small style="color:#666;">* El precio se confirma según diseño, material, tiempo y envío.</small>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn btn-success" href="carrito.html"><i class="fa fa-shopping-cart"></i> Ver carrito</a>
+        <a class="btn btn-outline-success" href="contacto.html">Contacto</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer_section layout_padding">
+    <div class="container">
+      <p class="lorem_ipsum_text">© <span id="y"></span> Maderas Salvador • Ecuador</p>
+    </div>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery-3.0.0.min.js"></script>
+  <script src="js/plugin.js"></script>
+
+  <script src="js/cart.js"></script>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Edita esta lista con tus muebles estándar (nombre, precio, nota)
+    const muebles = [
+      { id:"mueble:velador", name:"Velador estándar", price:0, note:"Precio por confirmar" },
+      { id:"mueble:mesa", name:"Mesa estándar", price:0, note:"Precio por confirmar" },
+      { id:"mueble:silla", name:"Silla estándar", price:0, note:"Precio por confirmar" },
+    ];
+
+    function money(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n) || n<=0) return "Consultar";
+      return "$" + n.toFixed(2);
+    }
+
+    function renderStd() {
+      const grid = document.getElementById("stdGrid");
+      grid.innerHTML = "";
+      muebles.forEach(m => {
+        const col = document.createElement("div");
+        col.className = "col-md-4";
+        col.style.marginBottom = "16px";
+        col.innerHTML = `
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">${m.name}</h5>
+              <div style="font-size:18px; font-weight:800; margin:10px 0;">${money(m.price)}</div>
+              <div style="color:#666; font-size:13px; margin-bottom:12px;">${m.note || ""}</div>
+
+              <div class="form-row align-items-center">
+                <div class="col-5">
+                  <input type="number" class="form-control form-control-sm qty" min="1" value="1">
+                </div>
+                <div class="col-7">
+                  <button class="btn btn-success btn-sm btn-block addBtn">Agregar al carrito</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        const qtyEl = col.querySelector(".qty");
+        const btn = col.querySelector(".addBtn");
+        btn.addEventListener("click", () => {
+          const qty = Math.max(1, Number(qtyEl.value || 1));
+          window.MSCart.addItem({
+            id: m.id,
+            type: "mueble",
+            sku: "",
+            category: "MUEBLES",
+            name: m.name,
+            dimension: "",
+            length: "",
+            unit: "Unidad",
+            price: m.price || 0,
+            qty: qty,
+            note: m.note || ""
+          });
+          btn.textContent = "Agregado ✓";
+          setTimeout(()=>btn.textContent="Agregar al carrito", 900);
+        });
+        grid.appendChild(col);
+      });
+      window.MSCart.updateBadges();
+    }
+
+    document.getElementById("bp_add").addEventListener("click", () => {
+      const tipo = document.getElementById("bp_tipo").value.trim();
+      const medidas = document.getElementById("bp_medidas").value.trim();
+      const ciudad = document.getElementById("bp_ciudad").value.trim();
+      const acabado = document.getElementById("bp_acabado").value.trim();
+      const qty = Math.max(1, Number(document.getElementById("bp_qty").value || 1));
+
+      if (!tipo) {
+        alert("Escribe el tipo de mueble (ej: velador, mesa, clóset).");
+        return;
+      }
+
+      const note = [
+        medidas ? ("Medidas: " + medidas) : "",
+        acabado ? ("Acabado: " + acabado) : "",
+        ciudad ? ("Ciudad: " + ciudad) : ""
+      ].filter(Boolean).join(" • ");
+
+      window.MSCart.addItem({
+        id: "bajo-pedido:" + tipo.toLowerCase(),
+        type: "bajo_pedido",
+        sku: "",
+        category: "BAJO PEDIDO",
+        name: tipo,
+        dimension: medidas,
+        length: "",
+        unit: "Unidad",
+        price: 0,
+        qty: qty,
+        note: note
+      });
+
+      alert("Agregado al carrito. Revisa el carrito para enviar por WhatsApp.");
+      window.MSCart.updateBadges();
+    });
+
+    document.addEventListener("DOMContentLoaded", renderStd);
+  </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- basic -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrito | Maderas Salvador</title>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="icon" href="images/fevicon.png" type="image/gif" />
+<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+
+<body>
+  <div class="header_section">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12 col-lg-3">
+          <div class="logo"><a href="index.html"><img src="images/logo.png" alt="Maderas Salvador"></a></div>
+        </div>
+        <div class="col-sm-4 col-lg-5">
+          <div class="menu-area">
+            <nav class="navbar navbar-expand-lg ">
+              <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+<li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+<li class="nav-item"><a class="nav-link" href="madera.html">Madera</a></li>
+<li class="nav-item"><a class="nav-link" href="muebles.html">Muebles</a></li>
+<li class="nav-item"><a class="nav-link" href="quienes-somos.html">Quiénes somos</a></li>
+<li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+<li class="nav-item"><a class="nav-link" href="carrito.html">Carrito <span id="cartCountBadge" class="badge badge-success" style="margin-left:6px;">0</span></a></li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+        <div class="col-sm-8 col-lg-4">
+          <div class="togle_3">
+            <div class="right_main">
+              <div class="togle_main">
+                <a href="carrito.html" style="color:#fff;">
+                  <i class="fa fa-shopping-cart"></i> Carrito
+                  <span class="badge badge-success cart-count" style="margin-left:6px;">0</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="layout_padding" style="padding-top:40px;">
+    <div class="container">
+      <h2 style="margin-bottom:10px;">Tu carrito</h2>
+      <p style="color:#666; margin-bottom:20px;">Agrega productos desde <b>Madera</b> o <b>Muebles</b> y luego envía el pedido por WhatsApp.</p>
+
+      <div id="emptyBox" class="alert alert-info" style="display:none;">
+        Tu carrito está vacío. Ve a <a href="madera.html">Madera</a> o <a href="muebles.html">Muebles</a> para agregar productos.
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-bordered" style="background:#fff;">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th style="width:120px;">Cantidad</th>
+              <th style="width:140px;">Precio</th>
+              <th style="width:140px;">Subtotal</th>
+              <th style="width:80px;">Quitar</th>
+            </tr>
+          </thead>
+          <tbody id="cartBody"></tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap" style="gap:12px;">
+        <div>
+          <b>Total referencial:</b> <span id="cartTotal">$0.00</span>
+          <div style="font-size:12px; color:#666;">* El total final puede variar según stock, cortes, envío y acuerdos.</div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-secondary" id="clearBtn">Vaciar carrito</button>
+          <button class="btn btn-success" id="waBtn"><i class="fa fa-whatsapp"></i> Enviar a WhatsApp</button>
+          <button class="btn btn-outline-success" id="waAltBtn">WhatsApp alterno</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer_section layout_padding">
+    <div class="container">
+      <div class="social_icon"><a href="#"><img src="images/fb-icon.png"></a></div>
+      <div class="social_icon"><a href="#"><img src="images/twitter-icon.png"></a></div>
+      <div class="social_icon"><a href="#"><img src="images/in-icon.png"></a></div>
+      <div class="social_icon"><a href="#"><img src="images/instagram-icon.png"></a></div>
+      <p class="lorem_ipsum_text">© <span id="y"></span> Maderas Salvador • Ecuador</p>
+    </div>
+  </div>
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery-3.0.0.min.js"></script>
+  <script src="js/plugin.js"></script>
+
+  <script src="js/cart.js"></script>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    function renderCart() {
+      const items = window.MSCart.loadCart();
+      const body = document.getElementById("cartBody");
+      const empty = document.getElementById("emptyBox");
+      body.innerHTML = "";
+
+      if (!items.length) {
+        empty.style.display = "block";
+        document.getElementById("cartTotal").textContent = "$0.00";
+        window.MSCart.updateBadges();
+        return;
+      }
+      empty.style.display = "none";
+
+      items.forEach(it => {
+        const tr = document.createElement("tr");
+        const title = (it.name || it.dimension || "Producto");
+        const meta = [];
+        if (it.sku) meta.push("SKU: " + it.sku);
+        if (it.category) meta.push(it.category);
+        if (it.length) meta.push("Largo: " + it.length);
+        if (it.note) meta.push("Nota: " + it.note);
+
+        const price = it.price ? window.MSCart.money(it.price) : "Consultar";
+        const subtotal = it.price ? window.MSCart.money(it.price * it.qty) : "—";
+
+        tr.innerHTML = `
+          <td>
+            <b>${title}</b><br>
+            <small style="color:#666;">${meta.join(" • ")}</small>
+          </td>
+          <td>
+            <input type="number" min="1" class="form-control form-control-sm" value="${it.qty}">
+          </td>
+          <td>${price}</td>
+          <td>${subtotal}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-danger">X</button>
+          </td>
+        `;
+
+        const qtyInput = tr.querySelector("input");
+        qtyInput.addEventListener("input", () => {
+          window.MSCart.updateQty(it.id, qtyInput.value, it.note || "");
+          renderCart();
+        });
+
+        const delBtn = tr.querySelector("button");
+        delBtn.addEventListener("click", () => {
+          window.MSCart.removeItem(it.id, it.note || "");
+          renderCart();
+        });
+
+        body.appendChild(tr);
+      });
+
+      const total = window.MSCart.cartTotal();
+      document.getElementById("cartTotal").textContent = total ? window.MSCart.money(total) : "$0.00";
+      window.MSCart.updateBadges();
+    }
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      window.MSCart.clearCart();
+      renderCart();
+    });
+    document.getElementById("waBtn").addEventListener("click", () => window.MSCart.openWhatsApp(false));
+    document.getElementById("waAltBtn").addEventListener("click", () => window.MSCart.openWhatsApp(true));
+
+    document.addEventListener("DOMContentLoaded", renderCart);
+  </script>
+</body>
+</html>
